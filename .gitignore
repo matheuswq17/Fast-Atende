@@ -43,3 +43,10 @@ next-env.d.ts
 # logs
 build_errors.txt
 lint_errors.txt
+
+# agent resources
+skills/
+guides/
+skill-spine/
+claude.md
+AGENTS.md
