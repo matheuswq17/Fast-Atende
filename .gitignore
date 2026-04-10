@@ -48,5 +48,4 @@ lint_errors.txt
 skills/
 guides/
 skill-spine/
-claude.md
-AGENTS.md
+*.md
