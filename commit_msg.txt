@@ -1,6 +1,0 @@
-feat: implementa fase 1 de otimização de conversão e performance
-
-- Adicionado formulário de captura de leads on-site com validação
-- Adicionada seção de comparação (FastAtende vs WhatsApp Manual)
-- Otimização de performance com Dynamic Imports e tree-shaking no Next.js
-- Atualização do next.config.ts para redução de bundle e otimização de imagens

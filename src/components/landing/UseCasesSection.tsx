@@ -3,10 +3,11 @@ import { MotionSection } from "@/components/motion/MotionSection";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { CTA_LINKS } from "@/lib/cta";
 import { CheckCircle2 } from "lucide-react";
+import Image from "next/image";
 
 const SEGMENTS = [
   {
-    emoji: "🏥",
+    iconSrc: "/icons/icon_clinicas.png",
     title: "Clínicas & Consultórios",
     headline: "Fila de mensagens virando agendamentos organizados.",
     description:
@@ -14,7 +15,7 @@ const SEGMENTS = [
     features: ["Triagem de pacientes por tipo de demanda", "Coleta de informações antes do atendimento", "Direcionamento direto para secretaria"],
   },
   {
-    emoji: "💼",
+    iconSrc: "/icons/icon_equipes.png",
     title: "Equipes Comerciais",
     headline: "Lead qualificado direto para o vendedor certo.",
     description:
@@ -22,7 +23,7 @@ const SEGMENTS = [
     features: ["Separação de lead frio e lead quente", "Roteamento por produto ou região", "Histórico completo antes do primeiro contato humano"],
   },
   {
-    emoji: "🎧",
+    iconSrc: "/icons/icon_suporte_v2.png",
     title: "Central de Suporte",
     headline: "Menos volume manual. Mais resolução real.",
     description:
@@ -30,7 +31,7 @@ const SEGMENTS = [
     features: ["Resolução automática de dúvidas recorrentes", "Escalonamento com contexto completo", "Redução mensurável do tempo médio de resposta"],
   },
   {
-    emoji: "📲",
+    iconSrc: "/icons/icon_alto_volume_v2.png",
     title: "Alto Volume no WhatsApp",
     headline: "Operação profissional sem contratar mais pessoas.",
     description:
@@ -59,9 +60,18 @@ export function UseCasesSection() {
             <MotionSection
               key={seg.title}
               delay={0.1 * i}
-              className="rounded-[24px] border border-white/8 bg-white/[0.025] hover:bg-white/[0.04] hover:border-white/15 transition-all duration-300 p-8 lg:p-10 flex flex-col"
+              className="rounded-[24px] border border-white/8 bg-white/[0.025] hover:bg-white/[0.04] hover:border-white/15 transition-all duration-300 p-8 lg:p-10 flex flex-col group"
             >
-              <span className="text-3xl mb-5">{seg.emoji}</span>
+              <div className="relative w-12 h-12 lg:w-[52px] lg:h-[52px] mb-6 opacity-90 group-hover:opacity-100 transition-opacity duration-300">
+                <Image 
+                  src={seg.iconSrc} 
+                  alt={seg.title} 
+                  fill 
+                  sizes="64px"
+                  className="object-contain" 
+                  quality={100}
+                />
+              </div>
               <p className="text-xs text-slate-500 font-bold tracking-widest uppercase mb-2">{seg.title}</p>
               <h3 className="text-xl font-bold text-white mb-4 leading-snug">{seg.headline}</h3>
               <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">{seg.description}</p>
