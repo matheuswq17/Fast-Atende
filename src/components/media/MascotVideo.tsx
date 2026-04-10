@@ -47,89 +47,58 @@ export function MascotVideo({
   // Play/pause and Ping-Pong logic based on visibility
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !playWhenInView) return;
+    if (!video) return;
 
-    let isReversing = false;
-    let lastTime = window.performance.now();
-    let rAFId: number = 0;
-
-    const tickReverse = (now: number) => {
-      if (!isReversing) return;
-
-      const dt = (now - lastTime) / 1000;
-      lastTime = now;
-
-      // Ensure a reasonable dt so huge frames (tab switch) don't jump massively
-      const clampedDt = Math.min(dt, 0.1);
-      
-      const newTime = video.currentTime - clampedDt;
-
-      if (newTime <= 0) {
-        video.currentTime = 0;
-        isReversing = false;
-        video.play().catch(() => {});
-      } else {
-        video.currentTime = newTime;
-        rAFId = requestAnimationFrame(tickReverse);
-      }
-    };
-
-    const handleEnded = () => {
-      isReversing = true;
-      video.pause();
-      lastTime = window.performance.now();
-      rAFId = requestAnimationFrame(tickReverse);
-    };
-
-    video.addEventListener("ended", handleEnded);
-
-    if (isInView) {
-      if (!isReversing) {
-        video.play().catch(() => {});
-      } else {
-        lastTime = window.performance.now();
-        rAFId = requestAnimationFrame(tickReverse);
-      }
-    } else {
-      video.pause();
-      if (rAFId) cancelAnimationFrame(rAFId);
+    // Fast-track load state if video is already ready (e.g. cached)
+    if (video.readyState >= 3) {
+      setIsLoaded(true);
     }
 
-    return () => {
-      video.removeEventListener("ended", handleEnded);
-      if (rAFId) cancelAnimationFrame(rAFId);
-    };
+    if (!playWhenInView) return;
+
+    if (isInView) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
   }, [isInView, playWhenInView]);
 
   return (
     <div
       ref={containerRef}
-      className={cn("relative h-full w-full", className)}
+      className={cn("relative h-full w-full bg-[#060b19]", className)}
     >
       {/* Poster fallback — visible until video loads */}
-      {!isLoaded && (
+      <div 
+        className={cn(
+          "absolute inset-0 transition-opacity duration-700 pointer-events-none z-10", 
+          isLoaded ? "opacity-0" : "opacity-100"
+        )}
+      >
         <Image
           src={poster}
           alt="Mascote FastAtende"
           fill
-          className="object-cover pointer-events-none"
+          className="object-cover"
           priority={priority}
           sizes="(max-width: 768px) 80vw, 400px"
         />
-      )}
+      </div>
 
       {/* Video element — mounted immediately for priority, lazily for others */}
       {shouldRenderVideo && (
         <video
           ref={videoRef}
           className={cn(
-            "h-full w-full object-cover transition-opacity duration-500",
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 z-0",
             isLoaded ? "opacity-100" : "opacity-0"
           )}
           autoPlay={priority}
           muted
           playsInline
+          loop
           preload={priority ? "auto" : "none"}
+          onCanPlay={() => setIsLoaded(true)}
           onLoadedData={() => setIsLoaded(true)}
         >
           <source src={src} type="video/mp4" />
