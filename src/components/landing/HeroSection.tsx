@@ -6,6 +6,7 @@ import { MascotVideo } from "@/components/media/MascotVideo";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { CTA_LINKS } from "@/lib/cta";
 import { ArrowRight, MessageSquare } from "lucide-react";
+import { AnimatedHeroTitle } from "@/components/landing/AnimatedHeroTitle";
 
 export function HeroSection() {
   return (
@@ -22,19 +23,14 @@ export function HeroSection() {
 
           {/* Copy column */}
           <MotionSection delay={0.05} className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 mt-4 lg:mt-0">
               <span className="flex h-2 w-2 rounded-full bg-brand-cyan animate-pulse" />
               <span className="text-xs font-semibold text-slate-300 tracking-widest uppercase">
                 Operação no WhatsApp
               </span>
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.02] mb-7">
-              Mais velocidade.{" "}
-              <span className="text-brand-cyan">Menos caos.</span>
-              <br />
-              Operação organizada.
-            </h1>
+            <AnimatedHeroTitle />
 
             <p className="text-xl text-slate-400 mb-10 max-w-xl leading-relaxed">
               Triagem, direção e contexto para cada mensagem no WhatsApp. A FastAtende organiza suporte,

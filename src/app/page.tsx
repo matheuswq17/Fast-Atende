@@ -5,6 +5,7 @@ import { ScrollStory } from "@/components/landing/ScrollStory";
 import { UseCasesSection } from "@/components/landing/UseCasesSection";
 import { HowWeStart } from "@/components/landing/HowWeStart";
 import { PricingSection } from "@/components/landing/PricingSection";
+import { TeamSection } from "@/components/landing/TeamSection";
 import { FAQSection } from "@/components/landing/FAQSection";
 import { FinalCTASection } from "@/components/landing/FinalCTASection";
 import { MobileStickyCTA } from "@/components/ui/MobileStickyCTA";
@@ -23,6 +24,7 @@ export default function Home() {
         <UseCasesSection />
         <HowWeStart />
         <PricingSection />
+        <TeamSection />
         <FAQSection />
         <FinalCTASection />
       </main>
