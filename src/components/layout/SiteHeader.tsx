@@ -6,12 +6,14 @@ import { CTAButton } from "@/components/ui/CTAButton";
 import { CTA_LINKS } from "@/lib/cta";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const NAV_LINKS = [
-  { label: "Como funciona", href: "#como-funciona" },
-  { label: "Segmentos", href: "#segmentos" },
-  { label: "Dashboard", href: "#dashboard" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Como funciona", href: "#como-funciona", internal: false },
+  { label: "Segmentos", href: "#segmentos", internal: false },
+  { label: "Dashboard", href: "#dashboard", internal: false },
+  { label: "FAQ", href: "#faq", internal: false },
+  { label: "Já mapeou sua operação?", href: "/mapear-operacao", internal: true, highlight: true },
 ];
 
 export function SiteHeader() {
@@ -52,15 +54,30 @@ export function SiteHeader() {
 
             {/* Desktop nav */}
             <nav className="hidden lg:flex items-center gap-8">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-slate-400 hover:text-white transition-colors font-medium"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {NAV_LINKS.map((link) =>
+                link.internal ? (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={cn(
+                      "text-sm font-medium transition-colors",
+                      link.highlight
+                        ? "text-brand-cyan hover:opacity-80"
+                        : "text-slate-400 hover:text-white"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm text-slate-400 hover:text-white transition-colors font-medium"
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
             </nav>
 
             {/* Desktop CTA */}
@@ -85,16 +102,30 @@ export function SiteHeader() {
         {menuOpen && (
           <div className="lg:hidden bg-[#07101f] border-t border-white/8">
             <div className="px-4 py-6 flex flex-col gap-4">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-base text-slate-300 hover:text-white font-medium py-1"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {NAV_LINKS.map((link) =>
+                link.internal ? (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={cn(
+                      "text-base font-medium py-1",
+                      link.highlight ? "text-brand-cyan" : "text-slate-300 hover:text-white"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-base text-slate-300 hover:text-white font-medium py-1"
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
               <CTAButton href={CTA_LINKS.mapear} variant="primary" className="mt-2 w-full justify-center">
                 Mapear minha operação →
               </CTAButton>
